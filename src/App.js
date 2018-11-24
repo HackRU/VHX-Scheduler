@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Login from './Login'
 
 
 class App extends Component {
@@ -7,6 +8,7 @@ class App extends Component {
       <div className="App">
         Welcome To VHX Scheduler
         Login below
+        <Login />
       </div>
     );
   }
