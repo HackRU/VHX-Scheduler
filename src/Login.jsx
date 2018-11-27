@@ -30,7 +30,7 @@ handleChange = event => {
           <input type="text" id='login' value={this.state.login} onChange={this.handleChange}/>
         </label>
           <label>
-          password:
+          Password:
           <input type="password" id='password'  value={this.state.password} onChange={this.handleChange}/>
         </label>
         <input type="submit" value="Submit" />
