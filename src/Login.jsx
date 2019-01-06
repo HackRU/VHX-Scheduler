@@ -31,13 +31,15 @@ handleChange = event => {
   }
   httpClient.post("/login",request_data).then(response =>{
     if(response.data.statusCode === 200){
+      //extract the body of the request
+      const parsedData = JSON.parse(response.data.body)
       const cookies = new Cookies();
       //set cookies to now allow using the auth token from now on
-      cookies.set('auth', response.data.body.auth, { path: '/' });
+      cookies.set('auth', parsedData.token, { path: '/' });
       cookies.set('email', request_data.email, { path: '/' });
       this.props.history.push({
         pathname: '/profile',
-        state:{data:response.data}
+        state:{data:parsedData}
       }); 
     }
     else{
