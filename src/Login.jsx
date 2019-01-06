@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {httpClient} from "./handlers/axiosConfig"
+import Cookies from 'universal-cookie';
 
 
 
@@ -30,7 +31,11 @@ handleChange = event => {
   }
   httpClient.post("/login",request_data).then(response =>{
     if(response.data.statusCode === 200){
-      this.props.history.push({ //browserHistory.push should also work here
+      const cookies = new Cookies();
+      //set cookies to now allow using the auth token from now on
+      cookies.set('auth', response.data.body.auth, { path: '/' });
+      cookies.set('email', request_data.email, { path: '/' });
+      this.props.history.push({
         pathname: '/profile',
         state:{data:response.data}
       }); 
