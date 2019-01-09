@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Promote from './Promote'
 export default class Profile extends Component{
     constructor(props){
         super(props)
@@ -7,7 +7,7 @@ export default class Profile extends Component{
     render(){
         return(
             <div>
-                Hello
+                <Promote />
             </div>
         )
     }
