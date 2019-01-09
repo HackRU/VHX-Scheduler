@@ -7,36 +7,36 @@ export default class Promote extends Component {
         super(props)
         this.state = {
             email: "",
-            role:""
+            role: ""
         }
     }
     handleChange = event => {
         this.setState({
-          [event.target.id]: event.target.value
+            [event.target.id]: event.target.value
         });
-      }
+    }
 
     handleSubmit = event => {
         event.preventDefault();
         const cookies = new Cookies();
-        const request_data= {
-            "auth_email":cookies.get("email"),
-            "auth":cookies.get("auth"),
-            "user_email":this.state.email,
-            "role":this.state.role,
-            "roleValue":true
+        const request_data = {
+            "auth_email": cookies.get("email"),
+            "auth": cookies.get("auth"),
+            "user_email": this.state.email,
+            "role": this.state.role,
+            "roleValue": true
         }
-        httpClient.post("/promote",request_data).then(response =>{
-            if(response.data.statusCode === 200){
+        httpClient.post("/promote", request_data).then(response => {
+            if (response.data.statusCode === 200) {
                 alert(response.data.body)
             }
-            else{
+            else {
                 alert(response.data.body)
             }
-        }).catch(error =>{
+        }).catch(error => {
             console.error(error);
         })
-    }  
+    }
 
     render() {
         return (
@@ -48,30 +48,35 @@ export default class Promote extends Component {
                         <input type="text" id='email'
                             value={this.state.email} onChange={this.handleChange} />
                     </label>
-
+                    <br></br>
                     <label>
-                        Volunteer
-                        <input type="radio" id='role'
+
+                        <input type="radio" id='role' name="role"
                             value="volunteer" onChange={this.handleChange} />
+                        Volunteer
                     </label>
-
+                    <br></br>
                     <label>
-                        Director
-                        <input type="radio" id='director'
+
+                        <input type="radio" id='role' name="role"
                             value="director" onChange={this.handleChange} />
+                        Director
                     </label>
-
+                    <br></br>
                     <label>
-                        Judge
-                        <input type="radio" id='role'
+
+                        <input type="radio" id='role' name="role"
                             value="judge" onChange={this.handleChange} />
+                        Judge
                     </label>
-
+                    <br></br>
                     <label>
-                        Organizer
-                        <input type="radio" id='role'
+
+                        <input type="radio" id='role' name="role"
                             value="organizer" onChange={this.handleChange} />
+                        Organizer
                     </label>
+                    <br></br>
                     <input type="submit" value="Submit" />
                 </form>
             </div>
