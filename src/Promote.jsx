@@ -4,7 +4,8 @@ export default class Promote extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            email: ""
+            email: "",
+            role:""
         }
     }
 
@@ -16,6 +17,12 @@ export default class Promote extends Component {
                         Enter the email you want to promote:
                         <input type="text" id='email'
                             value={this.state.email} onChange={this.handleChange} />
+                    </label>
+
+                    <label>
+                        volunteer
+                        <input type="radio" id='volunteer'
+                            value={this.state.role} onChange={this.handleChange} />
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
