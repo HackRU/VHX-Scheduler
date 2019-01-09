@@ -9,7 +9,6 @@ class App extends Component {
     return (
       <div className="App">
         Welcome To VHX Scheduler
-        Login below
         <Router>
             <div>
                 <Route exact path="/" component={Login}/>
