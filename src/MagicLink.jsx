@@ -12,11 +12,26 @@ export default class MagicLinks extends Component {
             isJudge: false
         }
     }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        //build permissions
+        let permissionsList = "";
+        for (var key in this.state) {
+          if(key !=="emailToList" ){
+            if(this.state[key] === true) {
+                permissionsList += key
+                permissionsList +=","
+          }
+        }
+    }
+
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
         });
     }
+
 
     toggleChangeVolunteer = () => {
         this.setState(prevState => ({
@@ -41,9 +56,6 @@ export default class MagicLinks extends Component {
           isOrganizer: !prevState.isOrganizer,
         }));
       } 
-    handleSubmit = event => {
-        event.preventDefault();
-    }
     render() {
         return (
             <div>
