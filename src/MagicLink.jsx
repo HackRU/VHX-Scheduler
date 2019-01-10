@@ -24,7 +24,27 @@ export default class MagicLinks extends Component {
                 permissionsList +=","
           }
         }
+        const cookie = new Cookies()
+        const authEmail = cookie.get("email")
+        const token = cookie.get("auth")
+        const request_data = {
+            "email":authEmail,
+            "token":token,
+            "emailsTo":this.state.emailToList,
+            "permissions":permissionsList
+        }
+        httpClient.post('/magicLink',request_data).then(response =>{
+            if(response.data.statusCode !== 200){
+                alert(response.data.body)
+            }
+            else{
+                alert("Sucessful request")
+            }
+        }).catch(error =>{
+            console.error(error)
+        })
     }
+}
 
     handleChange = event => {
         this.setState({
