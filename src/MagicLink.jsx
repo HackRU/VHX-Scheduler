@@ -6,7 +6,10 @@ export default class MagicLinks extends Component {
         super(props)
         this.state = {
             emailToList: "",
-            permissions: ""
+            isVolunteer: false,
+            isDirector:false,
+            isOrganizer:false,
+            isJudge:false
         }
     }
     handleChange = event => {
@@ -25,7 +28,8 @@ export default class MagicLinks extends Component {
                         Enter the emails(s) you want to send magic links to (Comma Seperated if multiple)
                         <input type="text" id='emailToList'
                             value={this.state.emailToList} onChange={this.handleChange} />
-                    </label>
+                </label>
+                    <input type="submit" value="Submit" />
                  </form>
             </div>
         )
