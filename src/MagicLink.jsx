@@ -6,10 +6,10 @@ export default class MagicLinks extends Component {
         super(props)
         this.state = {
             emailToList: "",
-            isVolunteer: false,
-            isDirector: false,
-            isOrganizer: false,
-            isJudge: false
+            volunteer: false,
+            director: false,
+            organizer: false,
+            judge: false
         }
     }
 
@@ -24,16 +24,18 @@ export default class MagicLinks extends Component {
                 permissionsList +=","
           }
         }
+    }
         const cookie = new Cookies()
         const authEmail = cookie.get("email")
         const token = cookie.get("auth")
         const request_data = {
             "email":authEmail,
             "token":token,
-            "emailsTo":this.state.emailToList,
+            "emailsToSend":this.state.emailToList,
             "permissions":permissionsList
         }
-        httpClient.post('/magicLink',request_data).then(response =>{
+
+        httpClient.post('/magiclink',request_data).then(response =>{
             if(response.data.statusCode !== 200){
                 alert(response.data.body)
             }
@@ -44,7 +46,7 @@ export default class MagicLinks extends Component {
             console.error(error)
         })
     }
-}
+
 
     handleChange = event => {
         this.setState({
@@ -55,25 +57,25 @@ export default class MagicLinks extends Component {
 
     toggleChangeVolunteer = () => {
         this.setState(prevState => ({
-          isVolunteer: !prevState.isVolunteer,
+          volunteer: !prevState.volunteer,
         }));
       }
 
       toggleChangeDirector = () => {
         this.setState(prevState => ({
-          isDirector: !prevState.isDirector,
+          director: !prevState.director,
         }));
       } 
 
       toggleChangeJudge = () => {
         this.setState(prevState => ({
-          isJudge: !prevState.isJudge,
+          judge: !prevState.judge,
         }));
       } 
 
       toggleChangeOrganizer = () => {
         this.setState(prevState => ({
-          isOrganizer: !prevState.isOrganizer,
+          organizer: !prevState.organizer,
         }));
       } 
     render() {
