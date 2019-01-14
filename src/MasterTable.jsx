@@ -10,10 +10,10 @@ import { ClipLoader } from 'react-spinners';
  */
 const columns = [
     { key: "email", name: "Email"},
-    { key:"first_name", name:"First Name", editable:true },
-    {key:"last_name",name:"Last Name"},
-    {key:"shift", name:"Shift"},
-    {key:"current_action", name:"Current Action"}
+    { key:"first_name", name:"First Name" },
+    { key:"last_name",name:"Last Name"},
+    { key:"shift", name:"Shift", editable:true},
+    { key:"current_action", name:"Current Action", editable:true}
 ];
 export default class MasterTable extends Component {
 
@@ -46,6 +46,16 @@ export default class MasterTable extends Component {
             }
         })
     }
+    onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
+        this.setState(state => {
+          const rows = state.data.slice();
+          for (let i = fromRow; i <= toRow; i++) {
+            this.state.data[i] = { ...rows[i], ...updated };
+          }
+          console.log(this.state.data)
+          return { rows };
+        });
+      };
   
 
     render() {
@@ -72,7 +82,7 @@ export default class MasterTable extends Component {
                         rowGetter={i => 
                             this.state.data[i]}
                         rowsCount={this.state.data.length}
-                       
+                        onGridRowsUpdated={this.onGridRowsUpdated}
                         enableCellSelect={true}
                     />
                 </div>
