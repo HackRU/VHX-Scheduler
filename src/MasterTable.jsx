@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { httpClient } from "./handlers/axiosConfig"
 import Cookies from 'universal-cookie'
 import ReactDataGrid from "react-data-grid";
-import { css } from '@emotion/core';
-// First way to import
 import { ClipLoader } from 'react-spinners';
 /**
  * Master table of all volunteers
@@ -12,8 +10,9 @@ const columns = [
     { key: "email", name: "Email"},
     { key:"first_name", name:"First Name" },
     { key:"last_name",name:"Last Name"},
-    { key:"shift", name:"Shift", editable:true},
-    { key:"current_action", name:"Current Action", editable:true}
+    { key:"current_action", name:"Current Action", editable:true},
+    { key:"shift", name:"Shift", editable:true}
+
 ];
 export default class MasterTable extends Component {
 
@@ -24,7 +23,7 @@ export default class MasterTable extends Component {
             loading: false
         }
     }
-    //fetch data
+    //fetch data on mounting
     componentDidMount() {
         const cookie = new Cookies();
         const request_data = {
@@ -46,18 +45,30 @@ export default class MasterTable extends Component {
             }
         })
     }
+    //handler for changing the stafe on updating a row
     onGridRowsUpdated = ({ fromRow, toRow, updated }) => {
         this.setState(state => {
           const rows = state.data.slice();
           for (let i = fromRow; i <= toRow; i++) {
+            
             this.state.data[i] = { ...rows[i], ...updated };
+            //make request to save the data
+    
+            const request_data = {
+                "user_email":rows[i]["email"],
+                "current_action":updated['current_action'],
+                "shift":updated["shift"]
+
+            }
+                httpClient.post("/saveaction",request_data)
           }
           return { rows };
         });
       };
   
-
+    //condtional render becase react-data-grid doesnt have loading prop
     render() {
+        //load a loading screen while fetching the data from the api
         if (this.state.loading) {
             return (
                 <div>
@@ -87,8 +98,5 @@ export default class MasterTable extends Component {
                 </div>
             )
         }
-
-
-
     }
 }
