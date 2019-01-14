@@ -52,7 +52,6 @@ export default class MasterTable extends Component {
           for (let i = fromRow; i <= toRow; i++) {
             this.state.data[i] = { ...rows[i], ...updated };
           }
-          console.log(this.state.data)
           return { rows };
         });
       };
