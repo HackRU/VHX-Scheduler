@@ -10,9 +10,7 @@ const columns = [
     { key: "email", name: "Email"},
     { key:"first_name", name:"First Name" },
     { key:"last_name",name:"Last Name"},
-    { key:"current_action", name:"Current Action", editable:true},
-    { key:"shift", name:"Shift", editable:true}
-
+    { key:"current_action", name:"Current Action", editable:true}
 ];
 export default class MasterTable extends Component {
 
@@ -56,9 +54,7 @@ export default class MasterTable extends Component {
     
             const request_data = {
                 "user_email":rows[i]["email"],
-                "current_action":updated['current_action'],
-                "shift":updated["shift"]
-
+                "current_action":updated['current_action']
             }
                 httpClient.post("/saveaction",request_data)
           }
