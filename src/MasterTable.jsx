@@ -9,7 +9,6 @@ import { ClipLoader } from 'react-spinners';
 const columns = [
     { key: "email", name: "Email"},
     { key:"first_name", name:"First Name" },
-    { key:"last_name",name:"Last Name"},
     { key:"current_action", name:"Current Action", editable:true}
 ];
 export default class MasterTable extends Component {
