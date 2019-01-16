@@ -12,10 +12,12 @@ class Schedule extends Component {
     constructor(props){
         super(props)
         this.state = {
-            loading:false,
+            loading:true,
             data:[],
             emails:[],
-            shifts:[]
+            shifts:[],
+            viewModel:new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Day)
+      
         }
     }
     //make request to get volunteer data again
@@ -53,6 +55,8 @@ class Schedule extends Component {
                         "emails":emails,
                         "shifts":shifts
                     })
+                    this.setupScheduler()
+              
                 }
             }
             else {
@@ -63,10 +67,13 @@ class Schedule extends Component {
     //stuff with the scheduler
  
     setupScheduler(){
-        const schedulerData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Day);
+        console.log("setup called")
+        const schedulerData = this.state.viewModel
         schedulerData.setResources(this.state.emails);
         schedulerData.setEvents(this.state.shifts);
-        return schedulerData;
+        this.setState({
+            viewModel:schedulerData
+        })
     }
     prevClick = (schedulerData)=> {
         schedulerData.prev();
@@ -95,11 +102,11 @@ class Schedule extends Component {
 
             let newEvent = {
                 id: newFreshId,
-                title: 'New event you just created',
+                title: 'On Shift',
                 start: start,
                 end: end,
                 resourceId: slotId,
-                bgColor: 'purple'
+                bgColor: 'Blue'
             }
             schedulerData.addEvent(newEvent);
             this.setState({
@@ -126,7 +133,7 @@ class Schedule extends Component {
         //display actual schedule now
         else{
             return(
-                <Scheduler schedulerData={this.setupScheduler()}
+                <Scheduler schedulerData={this.state.viewModel}
                             newEvent={this.newEvent}
                             nextClick={this.nextClick}
                             prevClick={this.prevClick}
