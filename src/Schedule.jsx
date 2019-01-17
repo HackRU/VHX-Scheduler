@@ -48,7 +48,7 @@ class Schedule extends Component {
                         })
                         //if a shift key exists
                         if("shifts" in volunteer){
-                            shifts.push(volunteer.shifts)
+                            shifts.push.apply(shifts,volunteer.shifts)
                         }
                     }
                     this.setState({
@@ -62,6 +62,8 @@ class Schedule extends Component {
             else {
                 alert(response.data.body)
             }
+        }).catch(err =>{
+            console.error(err)
         })
     }
     //stuff with the scheduler
@@ -92,14 +94,12 @@ class Schedule extends Component {
     }
 
     newEvent = (schedulerData, slotId, slotName, start, end, type, item) => {
-            console.log("Called")
-
             let newFreshId = 0;
             schedulerData.events.forEach((item) => {
                 if(item.id >= newFreshId)
                     newFreshId = item.id + 1;
             });
-
+            
             let newEvent = {
                 id: newFreshId,
                 title: 'On Shift',
@@ -108,6 +108,17 @@ class Schedule extends Component {
                 resourceId: slotId,
                 bgColor: 'Blue'
             }
+            //make request to endpoint to save the data
+            const request_data = {
+                 "user_email":slotId,
+                 "event":newEvent
+            }
+            console.log(slotId)
+            httpClient.post("/saveshifts",request_data).then(resp=>{
+                
+            }).catch(err=>{
+                console.error(err)
+            })
             schedulerData.addEvent(newEvent);
             this.setState({
                 viewModel: schedulerData
