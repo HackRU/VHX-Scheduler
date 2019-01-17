@@ -69,7 +69,6 @@ class Schedule extends Component {
     //stuff with the scheduler
  
     setupScheduler(){
-        console.log("setup called")
         const schedulerData = this.state.viewModel
         schedulerData.setResources(this.state.emails);
         schedulerData.setEvents(this.state.shifts);
@@ -77,18 +76,20 @@ class Schedule extends Component {
             viewModel:schedulerData
         })
     }
+    //TODO: make this do something
     prevClick = (schedulerData)=> {
         schedulerData.prev();
        console.log("prev")
     }
-
+    //TODO: make this do something
     nextClick = (schedulerData)=> {
         console.log("next")
     }
+    //TODO: make this do something
     onViewChange = (schedulerData, view) => {
         console.log("view changed")
     }
-
+     //TODO: make this do something
     onSelectDate = (schedulerData, date) => {
         console.log("date selected")
     }
@@ -113,7 +114,6 @@ class Schedule extends Component {
                  "user_email":slotId,
                  "event":newEvent
             }
-            console.log(slotId)
             httpClient.post("/saveshifts",request_data).then(resp=>{
                 
             }).catch(err=>{
