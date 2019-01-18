@@ -90,7 +90,7 @@ export default class MagicLinks extends Component {
 
                     <label className="form-check-label">
                         <input type="checkbox"
-                            checked={this.state.isVolunteer}
+                            checked={this.state.volunteer}
                             onChange={this.toggleChangeVolunteer}
                             className="form-check-input"
                         />
@@ -99,7 +99,7 @@ export default class MagicLinks extends Component {
 
                     <label className="form-check-label">
                         <input type="checkbox"
-                            checked={this.state.isDirector}
+                            checked={this.state.director}
                             onChange={this.toggleChangeDirector}
                             className="form-check-input"
                         />
@@ -108,7 +108,7 @@ export default class MagicLinks extends Component {
 
                     <label className="form-check-label">
                         <input type="checkbox"
-                            checked={this.state.isOrganizer}
+                            checked={this.state.organizer}
                             onChange={this.toggleChangeOrganizer}
                             className="form-check-input"
                         />
@@ -117,7 +117,7 @@ export default class MagicLinks extends Component {
 
                     <label className="form-check-label">
                         <input type="checkbox"
-                            checked={this.state.isJudge}
+                            checked={this.state.judge}
                             onChange={this.toggleChangeJudge}
                             className="form-check-input"
                         />
