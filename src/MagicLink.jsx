@@ -87,39 +87,39 @@ export default class MagicLinks extends Component {
                         <input type="text" id='emailToList'
                             value={this.state.emailToList} onChange={this.handleChange} />
                     </label>
-
-                    <label className="form-check-label">
+                    
+                    <label>
                         <input type="checkbox"
                             checked={this.state.volunteer}
                             onChange={this.toggleChangeVolunteer}
-                            className="form-check-input"
+                    
                         />
                         Volunteer
                     </label>
 
-                    <label className="form-check-label">
+                    <label>
                         <input type="checkbox"
                             checked={this.state.director}
                             onChange={this.toggleChangeDirector}
-                            className="form-check-input"
+                        
                         />
                         Director
                     </label>
 
-                    <label className="form-check-label">
+                    <label>
                         <input type="checkbox"
                             checked={this.state.organizer}
                             onChange={this.toggleChangeOrganizer}
-                            className="form-check-input"
+                    
                         />
                         Organizer
                     </label>
 
-                    <label className="form-check-label">
+                    <label>
                         <input type="checkbox"
                             checked={this.state.judge}
                             onChange={this.toggleChangeJudge}
-                            className="form-check-input"
+                  
                         />
                         Judge
                     </label>
