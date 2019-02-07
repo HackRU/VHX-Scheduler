@@ -9,7 +9,8 @@ export default class MagicLinks extends Component {
             volunteer: false,
             director: false,
             organizer: false,
-            judge: false
+            judge: false,
+            mentor:false
         }
     }
 
@@ -73,6 +74,12 @@ export default class MagicLinks extends Component {
         }));
       } 
 
+      toggleChangeMentor = () => {
+        this.setState(prevState => ({
+          mentor: !prevState.mentor,
+        }));
+      } 
+
       toggleChangeOrganizer = () => {
         this.setState(prevState => ({
           organizer: !prevState.organizer,
@@ -122,6 +129,15 @@ export default class MagicLinks extends Component {
                   
                         />
                         Judge
+                    </label>
+
+                    <label>
+                        <input type="checkbox"
+                            checked={this.state.mentor}
+                            onChange={this.toggleChangeMentor}
+                  
+                        />
+                        Mentor
                     </label>
                     <input type="submit" value="Submit" />
                 </form>

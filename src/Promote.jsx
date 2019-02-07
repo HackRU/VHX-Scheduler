@@ -77,6 +77,13 @@ export default class Promote extends Component {
                         Organizer
                     </label>
                     <br></br>
+                    <label>
+
+                        <input type="radio" id='role' name="role"
+                            value="mentor" onChange={this.handleChange} />
+                        Mentor
+                    </label>
+                    <br></br>
                     <input type="submit" value="Submit" />
                 </form>
             </div>
