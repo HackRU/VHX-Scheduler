@@ -9,7 +9,8 @@ export default class MagicLinks extends Component {
             volunteer: false,
             director: false,
             organizer: false,
-            judge: false
+            judge: false,
+            mentor:false
         }
     }
 
@@ -73,6 +74,12 @@ export default class MagicLinks extends Component {
         }));
       } 
 
+      toggleChangeMentor = () => {
+        this.setState(prevState => ({
+          mentor: !prevState.mentor,
+        }));
+      } 
+
       toggleChangeOrganizer = () => {
         this.setState(prevState => ({
           organizer: !prevState.organizer,
@@ -87,41 +94,50 @@ export default class MagicLinks extends Component {
                         <input type="text" id='emailToList'
                             value={this.state.emailToList} onChange={this.handleChange} />
                     </label>
-
-                    <label className="form-check-label">
+                    
+                    <label>
                         <input type="checkbox"
                             checked={this.state.volunteer}
                             onChange={this.toggleChangeVolunteer}
-                            className="form-check-input"
+                    
                         />
                         Volunteer
                     </label>
 
-                    <label className="form-check-label">
+                    <label>
                         <input type="checkbox"
                             checked={this.state.director}
                             onChange={this.toggleChangeDirector}
-                            className="form-check-input"
+                        
                         />
                         Director
                     </label>
 
-                    <label className="form-check-label">
+                    <label>
                         <input type="checkbox"
                             checked={this.state.organizer}
                             onChange={this.toggleChangeOrganizer}
-                            className="form-check-input"
+                    
                         />
                         Organizer
                     </label>
 
-                    <label className="form-check-label">
+                    <label>
                         <input type="checkbox"
                             checked={this.state.judge}
                             onChange={this.toggleChangeJudge}
-                            className="form-check-input"
+                  
                         />
                         Judge
+                    </label>
+
+                    <label>
+                        <input type="checkbox"
+                            checked={this.state.mentor}
+                            onChange={this.toggleChangeMentor}
+                  
+                        />
+                        Mentor
                     </label>
                     <input type="submit" value="Submit" />
                 </form>

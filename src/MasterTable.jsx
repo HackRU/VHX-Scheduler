@@ -3,6 +3,7 @@ import { httpClient } from "./handlers/axiosConfig"
 import Cookies from 'universal-cookie'
 import ReactDataGrid from "react-data-grid";
 import { ClipLoader } from 'react-spinners';
+import NavbarVhx from './Navbar'
 /**
  * Master table of all volunteers
  */
@@ -67,6 +68,7 @@ export default class MasterTable extends Component {
         if (this.state.loading) {
             return (
                 <div>
+                   <NavbarVhx/>
                     <div className='sweet-loading'>
                         <ClipLoader
                             sizeUnit={"px"}
@@ -82,6 +84,7 @@ export default class MasterTable extends Component {
         else {
             return (
                 <div>
+                           <NavbarVhx/>
                     <ReactDataGrid
                         columns={columns}
                         rowGetter={i => 
