@@ -10,6 +10,6 @@ export default class Compute extends Component {
     }
 
     render(){
-        <Button variant="secondary"  onClick={this.computeTravel}>Compute Travel Reimbursements</Button>
+        return (<Button variant="secondary"  onClick={this.computeTravel}>Compute Travel Reimbursements</Button>)
     }
 }

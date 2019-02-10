@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { httpClient } from "./handlers/axiosConfig"
 import Cookies from 'universal-cookie';
+import { Container, Row, Col, Input} from "reactstrap";
 
 export default class Promote extends Component {
     constructor(props) {
@@ -40,6 +41,7 @@ export default class Promote extends Component {
 
     render() {
         return (
+            <Container fluid>
             <div>
                 Promote an existing user to a status
                 <form onSubmit={this.handleSubmit}>
@@ -87,6 +89,7 @@ export default class Promote extends Component {
                     <input type="submit" value="Submit" />
                 </form>
             </div>
+            </Container>
         )
     }
 }
