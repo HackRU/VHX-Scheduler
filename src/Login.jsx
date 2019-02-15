@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { httpClient } from "./handlers/axiosConfig"
 import Cookies from 'universal-cookie';
 import { Container, Row, Col} from "reactstrap";
-import { theme } from "./defaults"
 
 
 export default class Login extends Component {
