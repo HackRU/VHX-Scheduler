@@ -11,8 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-            <div>
-       
+            <div className="container-fluid">
                 <Route exact path="/" component={Login}/>
                 <Route path="/profile" component={Profile}/>
                 <Route path ="/MasterTable" component={MasterTable}/>

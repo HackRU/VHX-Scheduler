@@ -19,14 +19,14 @@
     --header-font: 'Raleway Dots', serif;
     --text-font: 'Open Sans', sans-serif;
     /* Form Inputs */
-    --input-background: rgba(255, 255, 255, 0.2);
-    --input-placeholder: rgba(255, 255, 255, 0.3);
+    --input-background: rgba(0, 0, 0, 0.2);
+    --input-placeholder: rgba(0, 0, 0, 0.3);
     --input-border: none;
-    --input-color: rgba(255, 255, 255, 1);
+    --input-color: rgb(0, 0, 0);
     --input-border-radius: 0px;
-    --select-background: rgba(255, 255, 255, 1);
+    --select-background: rgb(0, 0, 0);
     --select-color: rgba(0, 0, 0, 1);
-    --select-input-background: rgba(255, 255, 255, 0.075);
+    --select-input-background: rgba(74, 74, 74, 0.075);
     /* Hero Image */
     --hero-width: 400px;
     --hero-height: 400px;
@@ -40,6 +40,7 @@ body::-webkit-scrollbar {
 }
 body {
     font-family: var(--text-font) !important;
+    background-color: var(--hero-background);
 }
 ::selection {
     background-color: var(--input-placeholder);

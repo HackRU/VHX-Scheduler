@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { httpClient } from "./handlers/axiosConfig"
 import Cookies from 'universal-cookie';
-
+import { Container, Row, Col} from "reactstrap";
 
 
 export default class Login extends Component {
@@ -50,19 +50,30 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="LoginForm">
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Username:
-          <input type="text" id='login' value={this.state.login} onChange={this.handleChange} />
-          </label>
-          <label>
-            Password:
-          <input type="password" id='password' value={this.state.password} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
+      <Container fluid style={{ width: "100%", minHeight: "100vh", textAlign: "center"}} >
+        <Row className="d-flex align-items-center">
+          <Col>
+            <div className="LoginForm">
+              <div className="display-1">VHX Schedueler Login</div>
+              <form onSubmit={this.handleSubmit}>
+
+                <label>
+                  Username:
+                <input type="text" id='login' value={this.state.login} onChange={this.handleChange} />
+                </label>
+
+                <label>
+                  Password:
+                <input type="password" id='password' value={this.state.password} onChange={this.handleChange} />
+                </label>
+
+                <input type="submit" value="Submit" />
+              </form>
+
+            </div>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
