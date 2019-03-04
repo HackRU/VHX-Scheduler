@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { httpClient } from "./handlers/axiosConfig"
 import Cookies from 'universal-cookie'
+import ReactFileReader from 'react-file-reader'
 export default class MagicLinks extends Component {
     constructor(props) {
         super(props)
@@ -10,40 +11,75 @@ export default class MagicLinks extends Component {
             director: false,
             organizer: false,
             judge: false,
-            mentor:false
+            mentor: false
         }
     }
+    handleFiles = files => {
+        let reader = new FileReader();
+        reader.onload = e => {
+            //conver csv to json
+            const csv = reader.result;
+            const lines = csv.split("\n");
+            let result = [];
+            const headers = lines[0].split(",");
+            for (let i = 1; i < lines.length; i++) {
+                let obj = {};
+                let currentline = lines[i].split(",");
+                for (let j = 0; j < headers.length; j++) {
+                    obj[headers[j]] = currentline[j];
+                }
+                result.push(obj);
+            }
+            // now send magic links and add to Dynamo
+            //make request to magic link
+            let emailList = ""
+            for (let i in result) {
+                if ('Email' in result[i]) {
+                    if (result[i]["Email"] !== undefined && result[i]['Email'] !== "" ) {
+                        emailList += result[i]['Email'] + ","
+                    }
+                }
+            }
+            //everything except for the last comma gets auto
+            this.setState({
+                "emailToList": emailList.substring(0, emailList.length - 1)
+            });
+        }
+        reader.readAsText(files[0]);
+    }
+
+
 
     handleSubmit = event => {
         event.preventDefault();
         //build permissions
         let permissionsList = "";
         for (var key in this.state) {
-          if(key !=="emailToList" ){
-            if(this.state[key] === true) {
-                permissionsList += key
-                permissionsList +=","
-          }
+            if (key !== "emailToList") {
+                if (this.state[key] === true) {
+                    permissionsList += key
+                    permissionsList += ","
+                }
+            }
         }
-    }
         const cookie = new Cookies()
         const authEmail = cookie.get("email")
         const token = cookie.get("auth")
         const request_data = {
-            "email":authEmail,
-            "token":token,
-            "emailsToSend":this.state.emailToList,
-            "permissions":permissionsList
+            "email": authEmail,
+            "token": token,
+            "emailsToSend": this.state.emailToList,
+            "permissions": permissionsList
         }
 
-        httpClient.post('/magiclink',request_data).then(response =>{
-            if(response.data.statusCode !== 200){
+        httpClient.post('/magiclink', request_data).then(response => {
+            if (response.data.statusCode !== 200) {
                 alert(response.data.body)
             }
-            else{
+            else {
                 alert("Sucessful request")
             }
-        }).catch(error =>{
+        }).catch(error => {
             console.error(error)
         })
     }
@@ -58,33 +94,33 @@ export default class MagicLinks extends Component {
 
     toggleChangeVolunteer = () => {
         this.setState(prevState => ({
-          volunteer: !prevState.volunteer,
+            volunteer: !prevState.volunteer,
         }));
-      }
+    }
 
-      toggleChangeDirector = () => {
+    toggleChangeDirector = () => {
         this.setState(prevState => ({
-          director: !prevState.director,
+            director: !prevState.director,
         }));
-      } 
+    }
 
-      toggleChangeJudge = () => {
+    toggleChangeJudge = () => {
         this.setState(prevState => ({
-          judge: !prevState.judge,
+            judge: !prevState.judge,
         }));
-      } 
+    }
 
-      toggleChangeMentor = () => {
+    toggleChangeMentor = () => {
         this.setState(prevState => ({
-          mentor: !prevState.mentor,
+            mentor: !prevState.mentor,
         }));
-      } 
+    }
 
-      toggleChangeOrganizer = () => {
+    toggleChangeOrganizer = () => {
         this.setState(prevState => ({
-          organizer: !prevState.organizer,
+            organizer: !prevState.organizer,
         }));
-      } 
+    }
     render() {
         return (
             <div>
@@ -94,12 +130,12 @@ export default class MagicLinks extends Component {
                         <input type="text" id='emailToList'
                             value={this.state.emailToList} onChange={this.handleChange} />
                     </label>
-                    
+
                     <label>
                         <input type="checkbox"
                             checked={this.state.volunteer}
                             onChange={this.toggleChangeVolunteer}
-                    
+
                         />
                         Volunteer
                     </label>
@@ -108,7 +144,7 @@ export default class MagicLinks extends Component {
                         <input type="checkbox"
                             checked={this.state.director}
                             onChange={this.toggleChangeDirector}
-                        
+
                         />
                         Director
                     </label>
@@ -117,7 +153,7 @@ export default class MagicLinks extends Component {
                         <input type="checkbox"
                             checked={this.state.organizer}
                             onChange={this.toggleChangeOrganizer}
-                    
+
                         />
                         Organizer
                     </label>
@@ -126,7 +162,7 @@ export default class MagicLinks extends Component {
                         <input type="checkbox"
                             checked={this.state.judge}
                             onChange={this.toggleChangeJudge}
-                  
+
                         />
                         Judge
                     </label>
@@ -135,14 +171,16 @@ export default class MagicLinks extends Component {
                         <input type="checkbox"
                             checked={this.state.mentor}
                             onChange={this.toggleChangeMentor}
-                  
+
                         />
                         Mentor
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
+                <ReactFileReader handleFiles={this.handleFiles} fileTypes={'.csv'}>
+                    <button className='btn'>Upload</button>
+                </ReactFileReader>
             </div>
         )
     }
-
 }
