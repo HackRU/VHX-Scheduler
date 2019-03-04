@@ -40,7 +40,7 @@ export default class MagicLinks extends Component {
                     }
                 }
             }
-            //everything except for the last comma gets auto
+            //everything except for the last comma gets auto filled
             this.setState({
                 "emailToList": emailList.substring(0, emailList.length - 1)
             });
