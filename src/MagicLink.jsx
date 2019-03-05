@@ -11,7 +11,8 @@ export default class MagicLinks extends Component {
             director: false,
             organizer: false,
             judge: false,
-            mentor: false
+            mentor: false,
+            sponsor:false
         }
     }
     handleFiles = files => {
@@ -44,11 +45,12 @@ export default class MagicLinks extends Component {
             this.setState({
                 "emailToList": emailList.substring(0, emailList.length - 1)
             });
+            //parse through csv and add mentors to dynamo
+
         }
         reader.readAsText(files[0]);
     }
-
-
+    
 
     handleSubmit = event => {
         event.preventDefault();
@@ -65,11 +67,16 @@ export default class MagicLinks extends Component {
         const cookie = new Cookies()
         const authEmail = cookie.get("email")
         const token = cookie.get("auth")
-        const request_data = {
+        let request_data = {
             "email": authEmail,
             "token": token,
             "emailsToSend": this.state.emailToList,
             "permissions": permissionsList
+        }
+        console.log(permissionsList.substring(0,permissionsList.length-1))
+        if(permissionsList.substring(0,permissionsList.length-1) == "sponsor"){
+            request_data['template'] = 'sponsor-invite'
+            request_data['base_link'] = 'sponsorship.hackru.org/magic'
         }
 
         httpClient.post('/magiclink', request_data).then(response => {
@@ -82,6 +89,7 @@ export default class MagicLinks extends Component {
         }).catch(error => {
             console.error(error)
         })
+        
     }
 
 
@@ -119,6 +127,11 @@ export default class MagicLinks extends Component {
     toggleChangeOrganizer = () => {
         this.setState(prevState => ({
             organizer: !prevState.organizer,
+        }));
+    }
+    toggleChangeSponsor = () => {
+        this.setState(prevState => ({
+            sponsor: !prevState.sponsor,
         }));
     }
     render() {
@@ -175,11 +188,20 @@ export default class MagicLinks extends Component {
                         />
                         Mentor
                     </label>
+
+                    <label>
+                        <input type="checkbox"
+                            checked={this.state.sponsor}
+                            onChange={this.toggleChangeSponsor}
+                        />
+                        Sponsor
+                    </label>
                     <input type="submit" value="Submit" />
                 </form>
                 <ReactFileReader handleFiles={this.handleFiles} fileTypes={'.csv'}>
-                    <button className='btn'>Upload</button>
+                    <button className='btn'>Bulk Send Magic Links</button>
                 </ReactFileReader>
+
             </div>
         )
     }
