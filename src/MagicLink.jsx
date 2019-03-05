@@ -12,9 +12,10 @@ export default class MagicLinks extends Component {
             organizer: false,
             judge: false,
             mentor: false,
-            sponsor:false
+            sponsor: false
         }
     }
+
     handleFiles = files => {
         let reader = new FileReader();
         reader.onload = e => {
@@ -34,23 +35,82 @@ export default class MagicLinks extends Component {
             // now send magic links and add to Dynamo
             //make request to magic link
             let emailList = ""
+            //build a json array 
+            let volunteers = {}
             for (let i in result) {
-                if ('Email' in result[i]) {
-                    if (result[i]["Email"] !== undefined && result[i]['Email'] !== "" ) {
-                        emailList += result[i]['Email'] + ","
-                    }
-                }
-            }
-            //everything except for the last comma gets auto filled
-            this.setState({
-                "emailToList": emailList.substring(0, emailList.length - 1)
-            });
-            //parse through csv and add mentors to dynamo
+                if (result[i]['Name'] != undefined && result[i]['Name'] != "") {
 
+                    let volunteer_entry = {}
+                    if (result[i]['Name'] in volunteers) {
+                        //if name already exists add
+                        volunteer_entry = volunteers[result[i]['Name']]
+                    }
+                    else {
+                         volunteer_entry = {
+                            "name": result[i]["Name"],
+                            "email": "",
+                            "shifts": []
+                        }
+                    }
+                    //add the shifts
+
+                    const time = result[i]['Time'].split("||");
+                    if (time.length < 2) {
+                        continue
+                    }
+                    const start = time[0]
+                    const end = time[1]
+                    if ('Email' in result[i]) {
+                        if (result[i]["Email"] !== undefined && result[i]['Email'] !== "") {
+                            if (volunteer_entry['email'] == "") {
+                                volunteer_entry["email"] = result[i]['Email']
+                            }
+                            emailList += result[i]['Email'] + ","
+                        }
+
+                        //parse through csv and add volunteers to dynamo
+
+                        volunteer_entry['shifts'].push({
+                            "M": {
+                                "bgColor": {
+                                    "S": "Blue"
+                                },
+                                "end": {
+                                    "S": end
+                                },
+                                "id": {
+                                    "N": "0"
+                                },
+                                "resourceId": {
+                                    "S": volunteer_entry['email']
+                                },
+                                "start": {
+                                    "S": start
+                                },
+                                "title": {
+                                    "S": "On Shift"
+                                }
+                            }
+                        }
+
+                        );
+
+                        //everything except for the last comma gets auto filled
+                        this.setState({
+                            "emailToList": emailList.substring(0, emailList.length - 1)
+                        });
+
+                        volunteers[volunteer_entry['name']] = volunteer_entry
+                    }
+
+                }
+
+            }
+            console.log(volunteers)
         }
         reader.readAsText(files[0]);
     }
-    
+
 
     handleSubmit = event => {
         event.preventDefault();
@@ -73,8 +133,7 @@ export default class MagicLinks extends Component {
             "emailsToSend": this.state.emailToList,
             "permissions": permissionsList
         }
-        if(permissionsList.substring(0,permissionsList.length-1) == "sponsor"){
-            console.log("true")
+        if (permissionsList.substring(0, permissionsList.length - 1) == "sponsor") {
             request_data['template'] = 'sponsor-invite'
             request_data['link_base'] = 'sponsorship.hackru.org/magic'
         }
@@ -89,7 +148,7 @@ export default class MagicLinks extends Component {
         }).catch(error => {
             console.error(error)
         })
-        
+
     }
 
 
@@ -206,3 +265,4 @@ export default class MagicLinks extends Component {
         )
     }
 }
+
