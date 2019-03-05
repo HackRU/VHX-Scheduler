@@ -73,7 +73,6 @@ export default class MagicLinks extends Component {
             "emailsToSend": this.state.emailToList,
             "permissions": permissionsList
         }
-        console.log(permissionsList.substring(0,permissionsList.length-1))
         if(permissionsList.substring(0,permissionsList.length-1) == "sponsor"){
             request_data['template'] = 'sponsor-invite'
             request_data['base_link'] = 'sponsorship.hackru.org/magic'
