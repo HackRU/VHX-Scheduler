@@ -67,9 +67,7 @@ export default class MagicLinks extends Component {
                             }
                             emailList += result[i]['Email'] + ","
                         }
-
                         //parse through csv and add volunteers to dynamo
-
                         volunteer_entry['shifts'].push({
                             "M": {
                                 "bgColor": {
@@ -94,19 +92,19 @@ export default class MagicLinks extends Component {
                         }
 
                         );
-
-                        //everything except for the last comma gets auto filled
-                        this.setState({
-                            "emailToList": emailList.substring(0, emailList.length - 1)
-                        });
-
                         volunteers[volunteer_entry['name']] = volunteer_entry
+                 
+                        
                     }
 
                 }
 
             }
+            this.setState({
+                "emailToList": emailList.substring(0, emailList.length - 1)
+            });
             console.log(volunteers)
+            //add iterate through the shifts to make sure the resourceId exists
         }
         reader.readAsText(files[0]);
     }
