@@ -69,42 +69,42 @@ export default class MagicLinks extends Component {
                         }
                         //parse through csv and add volunteers to dynamo
                         volunteer_entry['shifts'].push({
-                            "M": {
-                                "bgColor": {
-                                    "S": "Blue"
-                                },
-                                "end": {
-                                    "S": end
-                                },
-                                "id": {
-                                    "N": "0"
-                                },
-                                "resourceId": {
-                                    "S": volunteer_entry['email']
-                                },
-                                "start": {
-                                    "S": start
-                                },
-                                "title": {
-                                    "S": "On Shift"
-                                }
+                                "bgColor": "Blue",
+                                "end": end,
+                                "id": Math.floor(Math.random() * 1000),
+                                "resourceId": volunteer_entry['email'],
+                                "start": start,
+                                "title": "On Shift"
+                                
                             }
-                        }
+                        
 
                         );
                         volunteers[volunteer_entry['name']] = volunteer_entry
-                 
-                        
                     }
-
                 }
-
             }
             this.setState({
                 "emailToList": emailList.substring(0, emailList.length - 1)
             });
-            console.log(volunteers)
-            //add iterate through the shifts to make sure the resourceId exists
+            //make post requests
+            for(let key in volunteers){
+                if (volunteers.hasOwnProperty(key)) {
+                    for(let i in volunteers[key]['shifts']){
+                        const request_data = {
+                            "user_email": volunteers[key]['email'],
+                            "event": volunteers[key]['shifts'][i]
+                        }
+                        httpClient.post("/saveshifts", request_data).then(resp => {
+                         }).catch(err => {
+                            console.error(err)
+                        })
+
+                }
+            }
+              
+        }
+
         }
         reader.readAsText(files[0]);
     }
