@@ -101,6 +101,12 @@ export default class MagicLinks extends Component {
                         })
 
                 }
+                const request_data = {
+                    "user_email":volunteers[key]['email'],
+                    "current_action":"Not Checked in"
+                }
+                    httpClient.post("/saveaction",request_data)
+              
             }
               
         }
