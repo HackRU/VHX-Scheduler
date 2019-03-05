@@ -74,8 +74,9 @@ export default class MagicLinks extends Component {
             "permissions": permissionsList
         }
         if(permissionsList.substring(0,permissionsList.length-1) == "sponsor"){
+            console.log("true")
             request_data['template'] = 'sponsor-invite'
-            request_data['base_link'] = 'sponsorship.hackru.org/magic'
+            request_data['link_base'] = 'sponsorship.hackru.org/magic'
         }
 
         httpClient.post('/magiclink', request_data).then(response => {
