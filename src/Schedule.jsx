@@ -17,7 +17,7 @@ class Schedule extends Component {
             data: [],
             emails: [],
             shifts: [],
-            viewModel: new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Day)
+            viewModel: new SchedulerData(new moment('2019-03-09 16:00:00').format("YYYY-MM-DD HH:MM:SS"), ViewTypes.Day)
 
         }
     }
@@ -84,6 +84,7 @@ class Schedule extends Component {
     }
     //TODO: make this do something
     nextClick = (schedulerData) => {
+        schedulerData.next();
         console.log("next")
     }
     //TODO: make this do something
