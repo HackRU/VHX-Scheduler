@@ -3,10 +3,11 @@ import { httpClient } from "./handlers/axiosConfig"
 import Cookies from 'universal-cookie'
 import { ClipLoader } from 'react-spinners';
 import 'react-big-scheduler/lib/css/style.css'
-import Scheduler, { SchedulerData, ViewTypes, DATE_FORMAT } from 'react-big-scheduler'
+import Scheduler, { SchedulerData, ViewTypes, DATE_FORMAT, CellUnits } from 'react-big-scheduler'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import NavbarVhx from './Navbar'
+import {HACKRU_START,HACKRU_END} from './Constants'
 
 import moment from 'moment'
 class Schedule extends Component {
@@ -17,7 +18,13 @@ class Schedule extends Component {
             data: [],
             emails: [],
             shifts: [],
-            viewModel: new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Day)
+            viewModel: new SchedulerData(new moment().format(),  ViewTypes.Custom, false, false, {
+                customCellWidth: 30,
+                nonAgendaDayCellHeaderFormat: 'M/D|h:mm',
+                views: [],
+            }, {
+                getCustomDateFunc: this.getCustomDate
+            })
 
         }
     }
@@ -84,6 +91,7 @@ class Schedule extends Component {
     }
     //TODO: make this do something
     nextClick = (schedulerData) => {
+        schedulerData.next();
         console.log("next")
     }
     //TODO: make this do something
@@ -94,7 +102,31 @@ class Schedule extends Component {
     onSelectDate = (schedulerData, date) => {
         console.log("date selected")
     }
+    getCustomDate = (schedulerData, num, date = undefined) => {
+        const {viewType} = schedulerData;
+        let selectDate = schedulerData.startDate;
+    
+        if(date != undefined)
+            selectDate = date;
+       //START DATE AND END DATE SET HERE
+       let startDate = schedulerData.localeMoment(HACKRU_START).format("YYYY-MM-DDThh:mm")
+        let dateToday =  moment();
+        let startMoment = moment(HACKRU_START)
+        let endMoment = moment(HACKRU_END)
+          if(dateToday.isBetween(startMoment,endMoment)){
+              startDate = schedulerData.localeMoment().format("YYYY-MM-DDThh:mm")
+          }
+          
 
+           let  endDate = schedulerData.localeMoment(HACKRU_END).format("YYYY-MM-DDThh:mm")
+           let  cellUnit = CellUnits.Hour;
+ 
+        return {
+            startDate,
+            endDate,
+            cellUnit
+        };
+    }
     newEvent = (schedulerData, slotId, slotName, start, end, type, item) => {
         let newFreshId = 0;
         schedulerData.events.forEach((item) => {

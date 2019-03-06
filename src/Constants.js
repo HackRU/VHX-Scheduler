@@ -1,0 +1,2 @@
+export const HACKRU_START = "2019-03-08T14:00:00";
+export const HACKRU_END = "2019-03-10T23:00:00"
