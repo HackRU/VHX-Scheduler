@@ -65,7 +65,7 @@ export default class MagicLinks extends Component {
                             if (volunteer_entry['email'] == "") {
                                 volunteer_entry["email"] = result[i]['Email']
                             }
-                            emailList += result[i]['Email'] + ","
+                    
                         }
                         //parse through csv and add volunteers to dynamo
                         volunteer_entry['shifts'].push({
@@ -81,15 +81,16 @@ export default class MagicLinks extends Component {
 
                         );
                         volunteers[volunteer_entry['name']] = volunteer_entry
+                        
                     }
                 }
             }
-            this.setState({
-                "emailToList": emailList.substring(0, emailList.length - 1)
-            });
+
+         
             //make post requests
             for(let key in volunteers){
                 if (volunteers.hasOwnProperty(key)) {
+                    emailList += volunteers[key]['email'] +','
                     for(let i in volunteers[key]['shifts']){
                         const request_data = {
                             "user_email": volunteers[key]['email'],
@@ -110,6 +111,9 @@ export default class MagicLinks extends Component {
             }
               
         }
+        this.setState({
+            "emailToList": emailList.substring(0, emailList.length - 1)
+        });
 
         }
         reader.readAsText(files[0]);
@@ -203,7 +207,7 @@ export default class MagicLinks extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Enter the emails(s) you want to send magic links to (Comma Seperated if multiple)
-                        <input type="text" id='emailToList'
+                        <input type="textarea" id='emailToList'
                             value={this.state.emailToList} onChange={this.handleChange} />
                     </label>
 
