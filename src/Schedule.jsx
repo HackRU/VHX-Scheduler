@@ -20,7 +20,7 @@ class Schedule extends Component {
             shifts: [],
             viewModel: new SchedulerData(new moment().format(),  ViewTypes.Custom, false, false, {
                 customCellWidth: 30,
-                nonAgendaDayCellHeaderFormat: 'M/D|H:mm',
+                nonAgendaDayCellHeaderFormat: 'M/D|h:mm',
                 views: [],
             }, {
                 getCustomDateFunc: this.getCustomDate
@@ -109,16 +109,16 @@ class Schedule extends Component {
         if(date != undefined)
             selectDate = date;
        //START DATE AND END DATE SET HERE
-       let startDate = schedulerData.localeMoment(HACKRU_START).format(DATE_FORMAT)
+       let startDate = schedulerData.localeMoment(HACKRU_START).format("YYYY-MM-DDThh:mm")
         let dateToday =  moment();
         let startMoment = moment(HACKRU_START)
         let endMoment = moment(HACKRU_END)
           if(dateToday.isBetween(startMoment,endMoment)){
-              startDate = schedulerData.localeMoment().format(DATE_FORMAT)
+              startDate = schedulerData.localeMoment().format("YYYY-MM-DDThh:mm")
           }
           
 
-           let  endDate = schedulerData.localeMoment(HACKRU_END).format(DATE_FORMAT)
+           let  endDate = schedulerData.localeMoment(HACKRU_END).format("YYYY-MM-DDThh:mm")
            let  cellUnit = CellUnits.Hour;
  
         return {
