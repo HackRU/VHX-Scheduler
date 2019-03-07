@@ -41,13 +41,15 @@ export default class MagicLinks extends Component {
                 if (result[i]['Name'] != undefined && result[i]['Name'] != "") {
 
                     let volunteer_entry = {}
-                    if (result[i]['Name'] in volunteers) {
+                    if (result[i]['Name'].toLowerCase() in volunteers) {
                         //if name already exists add
-                        volunteer_entry = volunteers[result[i]['Name']]
+                        volunteer_entry = volunteers[result[i]['Name'].toLowerCase()]
                     }
+            
                     else {
+                    
                          volunteer_entry = {
-                            "name": result[i]["Name"],
+                            "name": result[i]["Name"].toLowerCase(),
                             "email": "",
                             "shifts": []
                         }
@@ -106,7 +108,9 @@ export default class MagicLinks extends Component {
                     "user_email":volunteers[key]['email'],
                     "current_action":"Not Checked in"
                 }
-                    httpClient.post("/saveaction",request_data)
+                    httpClient.post("/saveaction",request_data).catch(err=>{
+                        console.error(err)
+                    })
               
             }
               
