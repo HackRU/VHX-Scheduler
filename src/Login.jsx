@@ -54,7 +54,7 @@ export default class Login extends Component {
         <Row className="d-flex align-items-center">
           <Col>
             <div className="LoginForm">
-              <div className="display-1">VHX Schedueler Login</div>
+              <div className="display-1">VHX Scheduler Login</div>
               <form onSubmit={this.handleSubmit}>
 
                 <label>
@@ -66,7 +66,7 @@ export default class Login extends Component {
                   Password:
                 <input type="password" id='password' value={this.state.password} onChange={this.handleChange} />
                 </label>
-
+                {"&emsp"}
                 <input type="submit" value="Submit" />
               </form>
 
