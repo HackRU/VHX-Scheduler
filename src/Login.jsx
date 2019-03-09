@@ -51,10 +51,16 @@ export default class Login extends Component {
   render() {
     return (
       <Container fluid style={{ width: "100%", minHeight: "100vh", textAlign: "center"}} >
+        <style>
+          input {
+            -webkit-border-radius:3px;
+          }
+        </style>
         <Row className="d-flex align-items-center">
           <Col>
             <div className="LoginForm">
-              <div className="display-1">VHX Schedueler Login</div>
+              <div className="display-1">VHX Scheduler Login</div>
+              </br></br>
               <form onSubmit={this.handleSubmit}>
 
                 <label>
@@ -66,8 +72,8 @@ export default class Login extends Component {
                   Password:
                 <input type="password" id='password' value={this.state.password} onChange={this.handleChange} />
                 </label>
-
-                <input type="submit" value="Submit" />
+                {"&emsp"}
+                <input type="submit" value="Submit" style="min-height:8px -webkit-border:0 -webkit-border-radius:4px"/>
               </form>
 
             </div>
